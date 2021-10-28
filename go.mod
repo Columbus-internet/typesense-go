@@ -11,5 +11,3 @@ require (
 	github.com/stretchr/testify v1.7.0
 	github.com/testcontainers/testcontainers-go v0.11.1
 )
-
-replace github.com/typesense/typesense-go => github.com/Columbus-internet/typesense-go master
