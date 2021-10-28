@@ -76,6 +76,10 @@ type CollectionSchema struct {
 	// A list of fields for querying, filtering and faceting
 	Fields []Field `json:"fields"`
 
+	TokenSeparators []string `json:"token_separators"`
+
+	SymbolsToIndex []string `json:"symbols_to_index"`
+
 	// Name of the collection
 	Name string `json:"name"`
 }
