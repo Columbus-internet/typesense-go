@@ -1,4 +1,4 @@
-module github.com/Columbus-internet/typesense-go
+module github.com/typesense/typesense-go
 
 go 1.15
 
