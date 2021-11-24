@@ -1482,6 +1482,22 @@ func NewSearchCollectionRequest(server string, collectionName string, params *Se
 
 	}
 
+	if params.ExhaustiveSearch != nil {
+
+		if queryFrag, err := runtime.StyleParam("form", true, "exhaustive_search", *params.ExhaustiveSearch); err != nil {
+			return nil, err
+		} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+			return nil, err
+		} else {
+			for k, v := range parsed {
+				for _, v2 := range v {
+					queryValues.Add(k, v2)
+				}
+			}
+		}
+
+	}
+
 	if params.Page != nil {
 
 		if queryFrag, err := runtime.StyleParam("form", true, "page", *params.Page); err != nil {

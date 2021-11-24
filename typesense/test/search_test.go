@@ -1,3 +1,4 @@
+//go:build integration
 // +build integration
 
 package test
@@ -25,15 +26,16 @@ func TestCollectionSearch(t *testing.T) {
 	require.NoError(t, err)
 
 	searchParams := &api.SearchCollectionParams{
-		Q:              "Company",
-		QueryBy:        []string{"company_name", "country"},
-		QueryByWeights: &([]string{"2", "1"}),
-		MaxHits:        pointer.Interface("all"),
-		FilterBy:       pointer.String("num_employees:>=100"),
-		SortBy:         &([]string{"num_employees:desc"}),
-		NumTypos:       pointer.Int(2),
-		Page:           pointer.Int(1),
-		PerPage:        pointer.Int(10),
+		Q:                "Company",
+		QueryBy:          []string{"company_name", "country"},
+		QueryByWeights:   &([]string{"2", "1"}),
+		MaxHits:          pointer.Interface("all"),
+		FilterBy:         pointer.String("num_employees:>=100"),
+		SortBy:           &([]string{"num_employees:desc"}),
+		NumTypos:         pointer.Int(2),
+		ExhaustiveSearch: pointer.True(),
+		Page:             pointer.Int(1),
+		PerPage:          pointer.Int(10),
 	}
 
 	expectedDocs := []map[string]interface{}{

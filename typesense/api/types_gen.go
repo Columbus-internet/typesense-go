@@ -302,6 +302,9 @@ type SearchCollectionParams struct {
 	// The number of typographical errors (1 or 2) that would be tolerated. Default: 2
 	NumTypos *int `json:"num_typos,omitempty"`
 
+	// ExhaustiveSearch param
+	ExhaustiveSearch *bool `json:"exhaustive_search,omitempty"`
+
 	// Results from this specific page number would be fetched.
 	Page *int `json:"page,omitempty"`
 

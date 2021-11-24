@@ -16,21 +16,22 @@ import (
 
 func newSearchParams() *api.SearchCollectionParams {
 	return &api.SearchCollectionParams{
-		Q:              "text",
-		QueryBy:        []string{"company_name"},
-		MaxHits:        pointer.Interface("all"),
-		Prefix:         pointer.True(),
-		FilterBy:       pointer.String("num_employees:=100"),
-		SortBy:         &([]string{"num_employees:desc"}),
-		FacetBy:        &([]string{"year_started"}),
-		MaxFacetValues: pointer.Int(10),
-		FacetQuery:     pointer.String("facetQuery"),
-		NumTypos:       pointer.Int(2),
-		Page:           pointer.Int(1),
-		PerPage:        pointer.Int(10),
-		GroupBy:        &([]string{"country"}),
-		GroupLimit:     pointer.Int(3),
-		IncludeFields:  &([]string{"company_name"}),
+		Q:                "text",
+		QueryBy:          []string{"company_name"},
+		MaxHits:          pointer.Interface("all"),
+		Prefix:           pointer.True(),
+		FilterBy:         pointer.String("num_employees:=100"),
+		SortBy:           &([]string{"num_employees:desc"}),
+		FacetBy:          &([]string{"year_started"}),
+		MaxFacetValues:   pointer.Int(10),
+		FacetQuery:       pointer.String("facetQuery"),
+		NumTypos:         pointer.Int(2),
+		ExhaustiveSearch: pointer.True(),
+		Page:             pointer.Int(1),
+		PerPage:          pointer.Int(10),
+		GroupBy:          &([]string{"country"}),
+		GroupLimit:       pointer.Int(3),
+		IncludeFields:    &([]string{"company_name"}),
 	}
 }
 
