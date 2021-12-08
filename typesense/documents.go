@@ -31,7 +31,7 @@ type DocumentsInterface interface {
 	// Search performs document search in collection
 	Search(params *api.SearchCollectionParams) (*api.SearchResult, error)
 	// Export returns all documents from index in jsonl format
-	Export() (io.ReadCloser, error)
+	Export(params *api.SearchCollectionParams) (io.ReadCloser, error)
 	// Import returns json array. Each item of the response indicates
 	// the result of each document present in the request body (in the same order).
 	Import(documents []interface{}, params *api.ImportDocumentsParams) ([]*api.ImportDocumentResponse, error)
@@ -96,8 +96,13 @@ func (d *documents) Search(params *api.SearchCollectionParams) (*api.SearchResul
 	return response.JSON200, nil
 }
 
-func (d *documents) Export() (io.ReadCloser, error) {
-	response, err := d.apiClient.ExportDocuments(context.Background(), d.collectionName)
+func (d *documents) Export(params *api.SearchCollectionParams) (io.ReadCloser, error) {
+	if params.FilterBy != nil {
+		escapedFilterBy := url.QueryEscape(*params.FilterBy)
+		params.FilterBy = &escapedFilterBy
+	}
+	response, err := d.apiClient.ExportDocuments(context.Background(),
+		d.collectionName, params)
 	if err != nil {
 		return nil, err
 	}

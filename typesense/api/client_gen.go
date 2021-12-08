@@ -127,7 +127,7 @@ type ClientInterface interface {
 	IndexDocument(ctx context.Context, collectionName string, params *IndexDocumentParams, body IndexDocumentJSONRequestBody) (*http.Response, error)
 
 	// ExportDocuments request
-	ExportDocuments(ctx context.Context, collectionName string) (*http.Response, error)
+	ExportDocuments(ctx context.Context, collectionName string, params *SearchCollectionParams) (*http.Response, error)
 
 	// ImportDocuments request  with any body
 	ImportDocumentsWithBody(ctx context.Context, collectionName string, params *ImportDocumentsParams, contentType string, body io.Reader) (*http.Response, error)
@@ -396,8 +396,8 @@ func (c *Client) IndexDocument(ctx context.Context, collectionName string, param
 	return c.Client.Do(req)
 }
 
-func (c *Client) ExportDocuments(ctx context.Context, collectionName string) (*http.Response, error) {
-	req, err := NewExportDocumentsRequest(c.Server, collectionName)
+func (c *Client) ExportDocuments(ctx context.Context, collectionName string, params *SearchCollectionParams) (*http.Response, error) {
+	req, err := NewExportDocumentsRequest(c.Server, collectionName, params)
 	if err != nil {
 		return nil, err
 	}
@@ -1190,7 +1190,7 @@ func NewIndexDocumentRequestWithBody(server string, collectionName string, param
 }
 
 // NewExportDocumentsRequest generates requests for ExportDocuments
-func NewExportDocumentsRequest(server string, collectionName string) (*http.Request, error) {
+func NewExportDocumentsRequest(server string, collectionName string, params *SearchCollectionParams) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -1214,6 +1214,90 @@ func NewExportDocumentsRequest(server string, collectionName string) (*http.Requ
 	if err != nil {
 		return nil, err
 	}
+
+	queryValues := queryUrl.Query()
+
+	if params.FilterBy != nil {
+
+		if queryFrag, err := runtime.StyleParam("form", true, "filter_by", *params.FilterBy); err != nil {
+			return nil, err
+		} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+			return nil, err
+		} else {
+			for k, v := range parsed {
+				for _, v2 := range v {
+					queryValues.Add(k, v2)
+				}
+			}
+		}
+
+	}
+
+	if params.NumTypos != nil {
+
+		if queryFrag, err := runtime.StyleParam("form", true, "num_typos", *params.NumTypos); err != nil {
+			return nil, err
+		} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+			return nil, err
+		} else {
+			for k, v := range parsed {
+				for _, v2 := range v {
+					queryValues.Add(k, v2)
+				}
+			}
+		}
+
+	}
+
+	if params.ExhaustiveSearch != nil {
+
+		if queryFrag, err := runtime.StyleParam("form", true, "exhaustive_search", *params.ExhaustiveSearch); err != nil {
+			return nil, err
+		} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+			return nil, err
+		} else {
+			for k, v := range parsed {
+				for _, v2 := range v {
+					queryValues.Add(k, v2)
+				}
+			}
+		}
+
+	}
+
+	if params.IncludeFields != nil {
+
+		if queryFrag, err := runtime.StyleParam("form", false, "include_fields", *params.IncludeFields); err != nil {
+			return nil, err
+		} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+			return nil, err
+		} else {
+			for k, v := range parsed {
+				for _, v2 := range v {
+					queryValues.Add(k, v2)
+				}
+			}
+		}
+
+	}
+
+	if params.ExcludeFields != nil {
+
+		if queryFrag, err := runtime.StyleParam("form", false, "exclude_fields", *params.ExcludeFields); err != nil {
+			return nil, err
+		} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+			return nil, err
+		} else {
+			for k, v := range parsed {
+				for _, v2 := range v {
+					queryValues.Add(k, v2)
+				}
+			}
+		}
+
+	}
+
+	queryUrl.RawQuery = queryValues.Encode()
 
 	req, err := http.NewRequest("GET", queryUrl.String(), nil)
 	if err != nil {
@@ -2545,7 +2629,7 @@ type ClientWithResponsesInterface interface {
 	IndexDocumentWithResponse(ctx context.Context, collectionName string, params *IndexDocumentParams, body IndexDocumentJSONRequestBody) (*IndexDocumentResponse, error)
 
 	// ExportDocuments request
-	ExportDocumentsWithResponse(ctx context.Context, collectionName string) (*ExportDocumentsResponse, error)
+	ExportDocumentsWithResponse(ctx context.Context, collectionName string, params *SearchCollectionParams) (*ExportDocumentsResponse, error)
 
 	// ImportDocuments request  with any body
 	ImportDocumentsWithBodyWithResponse(ctx context.Context, collectionName string, params *ImportDocumentsParams, contentType string, body io.Reader) (*ImportDocumentsResponse, error)
@@ -3451,8 +3535,8 @@ func (c *ClientWithResponses) IndexDocumentWithResponse(ctx context.Context, col
 }
 
 // ExportDocumentsWithResponse request returning *ExportDocumentsResponse
-func (c *ClientWithResponses) ExportDocumentsWithResponse(ctx context.Context, collectionName string) (*ExportDocumentsResponse, error) {
-	rsp, err := c.ExportDocuments(ctx, collectionName)
+func (c *ClientWithResponses) ExportDocumentsWithResponse(ctx context.Context, collectionName string, params *SearchCollectionParams) (*ExportDocumentsResponse, error) {
+	rsp, err := c.ExportDocuments(ctx, collectionName, params)
 	if err != nil {
 		return nil, err
 	}
