@@ -34,6 +34,7 @@ func TestCollectionSearch(t *testing.T) {
 		SortBy:           &([]string{"num_employees:desc"}),
 		NumTypos:         pointer.Int(2),
 		ExhaustiveSearch: pointer.True(),
+		MaxCandidates:    pointer.Int(1000),
 		Page:             pointer.Int(1),
 		PerPage:          pointer.Int(10),
 	}

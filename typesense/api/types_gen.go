@@ -311,6 +311,9 @@ type SearchCollectionParams struct {
 	// Number of results to fetch per page. Default: 10
 	PerPage *int `json:"per_page,omitempty"`
 
+	// MaxCandidates param
+	MaxCandidates *int `json:"max_candidates,omitempty"`
+
 	// You can aggregate search results into groups or buckets by specify one or more `group_by` fields. Separate multiple fields with a comma. To group on a particular field, it must be a faceted field.
 	GroupBy *[]string `json:"group_by,omitempty"`
 

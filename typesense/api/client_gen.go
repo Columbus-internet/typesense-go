@@ -1265,6 +1265,21 @@ func NewExportDocumentsRequest(server string, collectionName string, params *Sea
 
 	}
 
+	if params.MaxCandidates != nil {
+
+		if queryFrag, err := runtime.StyleParam("form", true, "max_candidates", *params.MaxCandidates); err != nil {
+			return nil, err
+		} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+			return nil, err
+		} else {
+			for k, v := range parsed {
+				for _, v2 := range v {
+					queryValues.Add(k, v2)
+				}
+			}
+		}
+	}
+
 	if params.IncludeFields != nil {
 
 		if queryFrag, err := runtime.StyleParam("form", false, "include_fields", *params.IncludeFields); err != nil {
@@ -1580,6 +1595,21 @@ func NewSearchCollectionRequest(server string, collectionName string, params *Se
 			}
 		}
 
+	}
+
+	if params.MaxCandidates != nil {
+
+		if queryFrag, err := runtime.StyleParam("form", true, "max_candidates", *params.MaxCandidates); err != nil {
+			return nil, err
+		} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+			return nil, err
+		} else {
+			for k, v := range parsed {
+				for _, v2 := range v {
+					queryValues.Add(k, v2)
+				}
+			}
+		}
 	}
 
 	if params.Page != nil {

@@ -29,6 +29,7 @@ func newSearchParams() *api.SearchCollectionParams {
 		ExhaustiveSearch: pointer.True(),
 		Page:             pointer.Int(1),
 		PerPage:          pointer.Int(10),
+		MaxCandidates:    pointer.Int(1000),
 		GroupBy:          &([]string{"country"}),
 		GroupLimit:       pointer.Int(3),
 		IncludeFields:    &([]string{"company_name"}),
