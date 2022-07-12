@@ -88,6 +88,7 @@ type CollectionSchema struct {
 type Field struct {
 	Facet    bool   `json:"facet"`
 	Index    *bool  `json:"index,omitempty"`
+	Sort 	 *string `json:"sort,omitempty"`
 	Name     string `json:"name"`
 	Optional bool   `json:"optional"`
 	Type     string `json:"type"`
