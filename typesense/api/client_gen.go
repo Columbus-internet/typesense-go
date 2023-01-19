@@ -5,8 +5,7 @@ package api
 
 import (
 	"bytes"
-	"context"
-	"encoding/json"
+	"context"	
 	"fmt"
 	"io"
 	"io/ioutil"
@@ -14,6 +13,7 @@ import (
 	"net/url"
 	"strings"
 
+	"github.com/goccy/go-json"
 	"github.com/deepmap/oapi-codegen/pkg/runtime"
 )
 
