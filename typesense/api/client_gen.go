@@ -1692,7 +1692,7 @@ func NewSearchCollectionRequest(server string, collectionName string, params *Se
 
 	}
 
-	if params.ExcludeFields != nil {
+	/*if params.ExcludeFields != nil {
 
 		if queryFrag, err := runtime.StyleParam("form", false, "exclude_fields", *params.ExcludeFields); err != nil {
 			return nil, err
@@ -1706,7 +1706,7 @@ func NewSearchCollectionRequest(server string, collectionName string, params *Se
 			}
 		}
 
-	}
+	}*/
 
 	if params.HighlightFullFields != nil {
 
